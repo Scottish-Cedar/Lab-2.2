@@ -15,6 +15,7 @@ public:
 	int getc1();
 	int getm(int i);
 	string output();
+	bool div2(int &a);
 };
 
 Z::Z()
@@ -87,6 +88,15 @@ string Z::output()
 	return x1;
 }
 
+bool Z::div2(int &a)
+{
+	if (a % 2 != 0)
+	{
+		 return false;
+	}
+	else return true;
+}
+
 int main()
 {
 	string x1 = "";
@@ -96,12 +106,44 @@ int main()
 	int i = 0;
 	while (i<Z1.getc1())
 	{
-		cout << Z1.getm(i) << endl;
 		a += Z1.getm(i) * pow(10, Z1.getc1()-i-2);
 		i++;
 	}
 	cout << a << endl;
 	cout << x1 << endl;
+	int k = Z1.getc1()-1;
+	cout << k<< endl;
+	int xl=0, xr=0;
+	if (Z1.div2(k))
+	{
+		int i = 0;
+		while (i < k / 2)
+		{
+			xl += Z1.getm(i)*pow(10, k/2 - i-1);
+			i++;
+		}
+		while (i < k)
+		{
+			xr += Z1.getm(i)*pow(10, k-i-1);
+			i++;
+		}
+		cout << xl << "*10^"<<k/2<<"+" << xr << endl;
+	}
+	else
+	{
+		int i = 0;
+		while (i < 1+(k / 2))
+		{
+			xl += Z1.getm(i)*pow(10, k/2-i);
+			i++;
+		}
+		while (i < k)
+		{
+			xr += Z1.getm(i)*pow(10, k-i-1);
+			i++;
+		}
+		cout << xl << "*10^" << k / 2 << "+" << xr << endl;
+	}
 	system("pause");
 	return 0;
 }
