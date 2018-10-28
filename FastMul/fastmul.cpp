@@ -11,16 +11,29 @@ private:
 	int c1 = 0;
 public:
 	Z();
+	void check();
 	int input();
 	int getc1();
 	int getm(int i);
 	string output();
-	bool div2(int &a);
+	Z mult();
+	bool div2(int a);
 };
 
 Z::Z()
 {
 
+}
+
+void Z::check()
+{
+	int i = c1-1;
+	while (i>0)
+	{
+		mass[i + 1] += mass[i] / 10;
+		mass[i] = mass[i] % 10;		
+		i--;
+	}
 }
 
 int Z::getc1()
@@ -88,13 +101,48 @@ string Z::output()
 	return x1;
 }
 
-bool Z::div2(int &a)
+bool Z::div2(int a)
 {
 	if (a % 2 != 0)
 	{
 		 return false;
 	}
 	else return true;
+}
+
+Z Z::mult()
+{
+	int xl = 0, xr = 0;
+	if (Z::div2(c1-1))
+	{
+		int i = 0;
+		while (i < (c1-1) / 2)
+		{
+			xl += Z::getm(i)*pow(10, (c1-1) / 2 - i - 1);
+			i++;
+		}
+		while (i < (c1 - 1))
+		{
+			xr += Z::getm(i)*pow(10, (c1 - 1) - i - 1);
+			i++;
+		}
+		cout << xl << "*10^" << (c1 - 1) / 2 << "+" << xr << endl;
+	}
+	else
+	{
+		int i = 0;
+		while (i < 1 + ((c1 - 1) / 2))
+		{
+			xl += Z::getm(i)*pow(10, (c1 - 1) / 2 - i);
+			i++;
+		}
+		while (i < (c1 - 1))
+		{
+			xr += Z::getm(i)*pow(10, (c1 - 1) - i - 1);
+			i++;
+		}
+		cout << xl << "*10^" << (c1 - 1) / 2 << "+" << xr << endl;
+	}
 }
 
 int main()
@@ -109,7 +157,7 @@ int main()
 		a += Z1.getm(i) * pow(10, Z1.getc1()-i-2);
 		i++;
 	}
-	cout << a << endl;
+	//cout << a << endl;
 	cout << x1 << endl;
 	int k = Z1.getc1()-1;
 	cout << k<< endl;
