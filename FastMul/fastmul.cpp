@@ -8,7 +8,6 @@ class Z
 {
 private:
 	int mass[1000] = {};
-	int c1 = 0;
 public:
 	Z();
 	int input();
