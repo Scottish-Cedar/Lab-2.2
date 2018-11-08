@@ -15,7 +15,8 @@ public:
 	int input();
 	int getc1();
 	int getm(int i);
-	void division(Z, Z&, Z&);
+	int kara(Z Z1, Z Z2);
+	void division(Z);
 	void operator+=(Z);
 	bool div2(int a);
 };
@@ -28,13 +29,13 @@ Z::Z()
 void Z::check()
 {
 	int i = 0;
-	while (i<c1)
+	while (i < c1)
 	{
 		mass[i + 1] += mass[i] / 10;
-		mass[i] = mass[i] % 10;		
+		mass[i] = mass[i] % 10;
 		if (mass[i] != 0)
 		{
-			c1=i;
+			c1 = i;
 		}
 		i++;
 	}
@@ -63,65 +64,47 @@ int Z::getm(int i)
 
 int Z::input()
 {
-	int masshelp[1000] = {};
 	int i = 0;
 	while (i < 1000)
 	{
-		masshelp[i] = 0;
+		mass[i] = 0;
 		i++;
 	}
+	string k;
+	cin >> k;
 	i = 0;
-	int k = 0;
-	int massh[1000] = {};
-	int c = 0;
-	while ((i < 1000) && !cin.fail())
+	while (i<=k.length())
 	{
-		cin >> k;
-		if (k > 9)
-		{
-			c = 0;
-			while (k > 0)
-			{
-				c++;
-				massh[c] = k % 10;
-				k /= 10;
-			}
-
-			while (c > 0)
-			{
-				masshelp[i] = massh[c];
-				i++;
-				c--;
-			}
-		}
-		else
-		{
-			masshelp[i] = k;
-			i++;
-		}
-	}
-	c1 = i-1;
-	i = 0;
-	int i1 = 999;
-	while (i <1000)   //98700...00 -> 00...00789 
-	{
-		mass[i1] = masshelp[i];
-		i++;
-		i1--;
-	}
-	i--;	
+		mass[999 - i] = k[k.length()-i]-'0';
+		i++ ;
+	}	
+	c1 = k.length()+1;
+	cout << c1 << endl;
 	return c1;
-}  
+}
 
-void Z::division(Z Z1, Z& Z2,Z& Z3) //00...00987654321 -> 00..0009876 + 00...0054321
+void Z::division(Z Z1) //00...00987654321 -> 00..0009876 + 00...0054321
 {
 	int i = 0;
 	int k = 999;
-	while (i < c1 / 2)
+	Z Z2, Z3;
+	if (c1 % 2 == 0)
 	{
-		Z2.mass[k] = Z1.mass[k];
-		i++;
-		k--;
+		while (i < c1 / 2)
+		{
+			Z2.mass[k] = Z1.mass[k];
+			i++;
+			k--;
+		}
+	}
+	else
+	{
+		while (i < 1 + c1 / 2)
+		{
+			Z2.mass[k] = Z1.mass[k];
+			i++;
+			k--;
+		}
 	}
 	while (i < c1)
 	{
@@ -129,25 +112,33 @@ void Z::division(Z Z1, Z& Z2,Z& Z3) //00...00987654321 -> 00..0009876 + 00...005
 		i++;
 		k--;
 	}
-	i = 0;
+	i = 1000 - c1;
 	while (i < 1000)
 	{
 		cout << Z2.mass[i];
 		i++;
 	}
-	i = 0;
+	i = 1000 - c1;
+	cout << "    ";
 	while (i < 1000)
 	{
 		cout << Z3.mass[i];
 		i++;
 	}
+	cout << "    ";
+}
+
+int  Z::kara(Z Z1, Z Z2)
+{
+
+	return 0;
 }
 
 bool Z::div2(int a)
 {
 	if (a % 2 != 0)
 	{
-		 return false;
+		return false;
 	}
 	else return true;
 }
@@ -156,9 +147,16 @@ bool Z::div2(int a)
 
 int main()
 {
-	Z Z1, Z2, Z3;
+	Z Z1, Z2;
 	Z1.input();
-	Z1.division(Z1,Z2,Z3);
+	Z2.input();
+	/*while (i < 1000)
+	{
+		cout << Z1.getm(i);
+		i++;
+	}*/
+	Z2.division(Z2);
+	Z1.division(Z1);
 	system("pause");
 	return 0;
 }
